@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ordenando com JavaScript</title>
+    <script src="ordenando.js"></script>
+</head>
+<body>
+    <h1>Ordenação de Números</h1>
+    <input type="number" id="valor" placeholder="Digite um número">
+    <button onclick="add()">Adicionar</button>
+    
+    <select id="selecao">
+        <option value="bubble">Bubble Sort</option>
+        <option value="selection">Selection Sort</option>
+        <option value="quick">Quick Sort</option>
+    </select>
+    
+    <button onclick="ordenar()">Ordenar</button>
+    <button onclick="misturar()">Misturar</button>
+    
+    <ul id="valores"></ul>
+
+    <script>
+        function add() {
+            var input = document.getElementById('valor');
+            var lista = document.getElementById('valores');
+            var node = document.createElement('li');
+            var texto = document.createTextNode(input.value);
+            node.appendChild(texto);
+            lista.appendChild(node);
+            input.value = '';
+        }
+
+        function ordenar() {
+            var lista = document.getElementById('valores');
+            var selecao = document.getElementById('selecao');
+            var valores = Array.from(lista.children).map(function(item) {
+                return eval(item.innerHTML);
+            });
+
+            if (selecao.value === "bubble") {
+                bubble_sort(valores);
+            } else if (selecao.value === "selection") {
+                selection_sort(valores);
+            } else if (selecao.value === "quick") {
+                quick_sort(valores, 0, valores.length - 1);
+            }
+
+            lista.innerHTML = valores.map(function(valor) {
+                return '<li>' + valor + '</li>';
+            }).join('');
+        }
+
+        function misturar() {
+            var lista = document.getElementById('valores');
+            var valores = Array.from(lista.children).map(function(item) {
+                return eval(item.innerHTML);
+            });
+            shuffle(valores, valores.length);
+            lista.innerHTML = valores.map(function(valor) {
+                return '<li>' + valor + '</li>';
+            }).join('');
+        }
+    </script>
+</body>
+</html>
